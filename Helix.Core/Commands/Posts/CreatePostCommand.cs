@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using MediatR;
 
 namespace Helix.Core.Commands.Posts
