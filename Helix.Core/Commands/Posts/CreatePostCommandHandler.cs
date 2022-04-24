@@ -35,7 +35,7 @@ namespace Helix.Core.Commands.Posts
                     ,'{DateTime.Now}'
                     ,'{userId}');";
 
-            var response = await _commandHandler.Insert(sql);
+            var response = await _commandHandler.ExecuteCommandAsync(sql);
 
             if (response != 0)
                 return response;

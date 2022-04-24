@@ -1,67 +1,37 @@
-﻿using System.Data.SqlClient;
+﻿using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace Helix.Infrastructure.Database
 {
     public class CommandHandler : ICommandHandler
     {
-        private IDBConnection _connection;
+        private string _connectionString;
 
-        public CommandHandler(IDBConnection connection)
+        public CommandHandler(string connectionString)
         {
-            _connection = connection;
+            _connectionString = connectionString;
         }
 
-        //Insert statement
-        public async Task<int> Insert(string sql)
+        public async Task<int> ExecuteCommandAsync(string sql)
         {
-            if (await _connection.Open())
+            using (var conn = new SqlConnection(_connectionString))
             {
-                //create command and assign the query and connection from the constructor
-                SqlCommand cmd = new SqlCommand(sql, _connection.GetConnection());
+                await conn.OpenAsync();
 
-                //Execute command
-                var result = await cmd.ExecuteNonQueryAsync();
+                if (conn.State == ConnectionState.Open)
+                {
+                    SqlCommand cmd = new SqlCommand(sql, conn);
 
-                //close connection
-                await _connection.Close();
+                    var result = await cmd.ExecuteNonQueryAsync();
 
-                return result;
+                    await conn.CloseAsync();
+
+                    return result;
+                }
             }
 
             return 0;
         }
-
-        ////Update statement
-        //public void Update(string sql)
-        //{
-        //    //Open connection
-        //    if (_connection.OpenConnection())
-        //    {
-        //        //create mysql command
-        //        MySqlCommand cmd = new MySqlCommand();
-        //        //Assign the query using CommandText
-        //        cmd.CommandText = sql;
-        //        //Assign the connection using Connection
-        //        cmd.Connection = _connection.connection;
-
-        //        //Execute query
-        //        cmd.ExecuteNonQuery();
-
-        //        //close connection
-        //        _connection.CloseConnection();
-        //    }
-        //}
-
-        ////Delete statement
-        //public void Delete(string sql)
-        //{
-        //    if (_connection.OpenConnection() == true)
-        //    {
-        //        MySqlCommand cmd = new MySqlCommand(sql, _connection.connection);
-        //        cmd.ExecuteNonQuery();
-        //        _connection.CloseConnection();
-        //    }
-        //}
     }
 }

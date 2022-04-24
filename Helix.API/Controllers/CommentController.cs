@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Helix.API.Controllers
 {
@@ -11,7 +10,5 @@ namespace Helix.API.Controllers
         {
 
         }
-
-
     }
 }

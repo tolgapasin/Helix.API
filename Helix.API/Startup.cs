@@ -28,14 +28,13 @@ namespace Helix.API
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
 
-            services.AddSingleton<IDBConnection>(factory => new DBConnection(appSettings.HelixDBConnection));
+            services.AddSingleton<ICommandHandler>(factory => new CommandHandler(appSettings.HelixDBConnection));
+            services.AddSingleton<IQueryHandler>(factory => new QueryHandler(appSettings.HelixDBConnection));
 
-            services.AddSingleton<ICommandHandler>(factory => new CommandHandler(
-                factory.GetRequiredService<IDBConnection>()));
+            // Commands
             services.AddMediatR(typeof(CreatePostCommand).GetTypeInfo().Assembly);
 
-            services.AddSingleton<IQueryHandler>(factory => new QueryHandler(factory.GetRequiredService<IDBConnection>()));
-
+            // Queries
             services.AddTransient<IPostQueries>(factory => new PostQueries(factory.GetRequiredService<IQueryHandler>()));
 
         }
