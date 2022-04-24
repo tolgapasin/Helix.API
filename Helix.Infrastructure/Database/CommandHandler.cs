@@ -13,7 +13,7 @@ namespace Helix.Infrastructure.Database
             _connectionString = connectionString;
         }
 
-        public async Task<int> Insert(string sql)
+        public async Task<int> ExecuteCommandAsync(string sql)
         {
             using (var conn = new SqlConnection(_connectionString))
             {

@@ -4,8 +4,6 @@ namespace Helix.Infrastructure.Database
 {
     public interface ICommandHandler
     {
-        //void Delete(string sql);
-        Task<int> Insert(string sql);
-        //void Update(string sql);
+        Task<int> ExecuteCommandAsync(string sql)
     }
 }

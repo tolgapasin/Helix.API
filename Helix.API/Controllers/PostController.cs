@@ -24,15 +24,14 @@ namespace Helix.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<Post>> GetPosts()
         {
-            var result = await _postQueries.GetPostsAsync();
-            return result;
+            return await _postQueries.GetPostsAsync();
         }
 
-        //[HttpGet]
-        //public string GetPostById()
-        //{
-        //    return "test";
-        //}
+        [HttpGet]
+        public async Task<Post> GetPostById(Guid postId)
+        {
+            return await _postQueries.GetPostByIdAsync(postId);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreatePost([FromBody] CreatePostCommand command)

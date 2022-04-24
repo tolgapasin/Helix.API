@@ -6,6 +6,6 @@ namespace Helix.Infrastructure.Database
 {
     public interface IQueryHandler
     {
-        Task<IEnumerable<T>> ExecuteQuery<T>(string sql, object param = null);
+        Task<IEnumerable<T>> ExecuteQueryAsync<T>(string sql, object param = null);
     }
 }

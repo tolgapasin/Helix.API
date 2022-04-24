@@ -16,7 +16,7 @@ namespace Helix.Infrastructure.Database
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<T>> ExecuteQuery<T>(string sql, object param = null)
+        public async Task<IEnumerable<T>> ExecuteQueryAsync<T>(string sql, object param = null)
         {
             using (var conn = new SqlConnection(_connectionString))
             {
