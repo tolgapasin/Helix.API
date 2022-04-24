@@ -4,6 +4,7 @@ using Helix.Core.Commands.Posts;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using Helix.Core.Queries.Posts;
+using System.Collections.Generic;
 
 namespace Helix.API.Controllers
 {
@@ -21,10 +22,10 @@ namespace Helix.API.Controllers
         }
 
         [HttpGet]
-        public async Task<string> GetPosts()
+        public async Task<IEnumerable<Post>> GetPosts()
         {
-            await _postQueries.GetPostsAsync();
-            return "test";//string.Empty;
+            var result = await _postQueries.GetPostsAsync();
+            return result;
         }
 
         //[HttpGet]

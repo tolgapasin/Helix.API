@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Helix.Infrastructure.Database;
 
@@ -13,7 +14,7 @@ namespace Helix.Core.Queries.Posts
             _queryHandler = queryHandler;
         }
 
-        public async Task<bool> GetPostsAsync()
+        public async Task<IEnumerable<Post>> GetPostsAsync()
         {
             //var post = new Post();
 
@@ -26,9 +27,9 @@ namespace Helix.Core.Queries.Posts
                                   ,[UpdatedBy]
                             FROM [dbo].[Posts]";
 
-            var result = await _queryHandler.ExecuteQuery(sql);
+            var result = await _queryHandler.ExecuteQuery<Post>(sql, new { });
 
-            return false;
+            return result;
         }
     }
 }

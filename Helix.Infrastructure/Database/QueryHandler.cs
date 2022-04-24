@@ -1,35 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using Dapper;
 
 namespace Helix.Infrastructure.Database
 {
     public class QueryHandler : IQueryHandler
     {
-        private IDBConnection _connection;
+        private string _connectionString;
 
-        public QueryHandler(IDBConnection connection)
+        public QueryHandler(string connectionString)
         {
-            _connection = connection;
+            _connectionString = connectionString;
         }
 
-        public async Task<SqlDataReader> ExecuteQuery(string sql)
+        public async Task<IEnumerable<T>> ExecuteQuery<T>(string sql, object param = null)
         {
-            if (await _connection.Open())
+            using (var conn = new SqlConnection(_connectionString))
             {
-                //create command and assign the query and connection from the constructor
-                SqlCommand cmd = new SqlCommand(sql, _connection.GetConnection());
+                await conn.OpenAsync();
 
-                //Execute command
-                var result = await cmd.ExecuteReaderAsync();
+                if (conn.State == ConnectionState.Open)
+                {
+                    var result = await conn.QueryAsync<T>(sql, param);
+                    await conn.CloseAsync();
 
-                //close connection
-                await _connection.Close();
+                    return result;
+                }
 
-                return result;
+                return null;
             }
-
-            return null;
         }
     }
 }
