@@ -28,7 +28,6 @@ namespace Helix.API
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
 
-            //services.AddSingleton<IDBConnection>(factory => new DBConnection(appSettings.HelixDBConnection));
             services.AddSingleton<ICommandHandler>(factory => new CommandHandler(appSettings.HelixDBConnection));
             services.AddSingleton<IQueryHandler>(factory => new QueryHandler(appSettings.HelixDBConnection));
 

@@ -4,6 +4,6 @@ namespace Helix.Infrastructure.Database
 {
     public interface ICommandHandler
     {
-        Task<int> ExecuteCommandAsync(string sql)
+        Task<int> ExecuteCommandAsync(string sql);
     }
 }

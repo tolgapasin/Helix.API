@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Helix.Core.Commands.Posts;
-using Microsoft.AspNetCore.Mvc;
-using MediatR;
 using Helix.Core.Queries.Posts;
-using System.Collections.Generic;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Helix.API.Controllers
 {
@@ -22,18 +23,25 @@ namespace Helix.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IEnumerable<Post>> GetPosts()
         {
             return await _postQueries.GetPostsAsync();
         }
 
+        [Route("{postId}")]
         [HttpGet]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<Post> GetPostById(Guid postId)
         {
             return await _postQueries.GetPostByIdAsync(postId);
         }
 
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreatePost([FromBody] CreatePostCommand command)
         {
             var commandResult = await _mediator.Send(command);
@@ -41,6 +49,8 @@ namespace Helix.API.Controllers
         }
         
         [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public string UpdatePost()
         {
             return string.Empty;
@@ -48,6 +58,8 @@ namespace Helix.API.Controllers
 
         // Think about IsDeleted flags
         [HttpDelete]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public string DeletePost()
         {
             return string.Empty;

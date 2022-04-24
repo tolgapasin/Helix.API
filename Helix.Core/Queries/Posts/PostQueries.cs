@@ -41,7 +41,7 @@ namespace Helix.Core.Queries.Posts
                                   ,[UpdatedDate]
                                   ,[UpdatedBy]
                             FROM [dbo].[Posts]
-                            WHERE [PostId] = {postId}";
+                            WHERE [PostId] = '{postId}'";
 
             var result = await _queryHandler.ExecuteQueryAsync<Post>(sql, new { postId });
 
