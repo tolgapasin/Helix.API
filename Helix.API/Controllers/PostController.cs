@@ -47,13 +47,15 @@ namespace Helix.API.Controllers
             var commandResult = await _mediator.Send(command);
             return Ok(commandResult);
         }
-        
+
+        // TODO: Fix this
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public string UpdatePost()
+        public async Task<IActionResult> UpdatePost([FromBody] UpdatePostCommand command)
         {
-            return string.Empty;
+            var commandResult = await _mediator.Send(command);
+            return Ok(commandResult);
         }
 
         // Think about IsDeleted flags

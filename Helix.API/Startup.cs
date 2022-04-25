@@ -33,6 +33,7 @@ namespace Helix.API
 
             // Commands
             services.AddMediatR(typeof(CreatePostCommand).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(UpdatePostCommand).GetTypeInfo().Assembly);
 
             // Queries
             services.AddTransient<IPostQueries>(factory => new PostQueries(factory.GetRequiredService<IQueryHandler>()));

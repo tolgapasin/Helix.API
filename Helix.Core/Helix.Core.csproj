@@ -11,6 +11,7 @@
     <None Remove="Queries\" />
     <None Remove="Queries\Posts\" />
     <None Remove="Dapper" />
+    <None Remove="FluentValidation" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
@@ -21,6 +22,7 @@
   <ItemGroup>
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="FluentValidation" Version="10.4.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Helix.Infrastructure\Helix.Infrastructure.csproj" />
