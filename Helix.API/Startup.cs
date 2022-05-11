@@ -24,12 +24,20 @@ namespace Helix.API
         public void ConfigureServices(IServiceCollection services)
         {
             var appSettings = ReadAppSettings(Configuration);
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("Policy1",
+            //    builder => builder.WithOrigins("http://localhost:8080"));
+            //});
 
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
 
             services.AddSingleton<ICommandHandler>(factory => new CommandHandler(appSettings.HelixDBConnection));
             services.AddSingleton<IQueryHandler>(factory => new QueryHandler(appSettings.HelixDBConnection));
+
 
             // Commands
             services.AddMediatR(typeof(CreatePostCommand).GetTypeInfo().Assembly);
@@ -47,6 +55,8 @@ namespace Helix.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //app.UseCors("AllowMyOrigin");
 
             app.UseHttpsRedirection();
 

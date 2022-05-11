@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Helix.Core.Commands.Posts;
 using Helix.Core.Queries.Posts;
 using MediatR;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Helix.API.Controllers
 {
+    [EnableCors("Policy1")]
     [ApiController]
     [Route("api/[controller]")]
     public class PostController : ControllerBase
@@ -48,7 +50,6 @@ namespace Helix.API.Controllers
             return Ok(commandResult);
         }
 
-        // TODO: Fix this
         [HttpPut]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
