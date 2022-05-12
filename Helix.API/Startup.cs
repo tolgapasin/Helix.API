@@ -36,7 +36,7 @@ namespace Helix.API
             });
 
             services.AddMediatR(typeof(Startup));
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null); ;
 
             services.AddSingleton<ICommandHandler>(factory => new CommandHandler(appSettings.HelixDBConnection));
             services.AddSingleton<IQueryHandler>(factory => new QueryHandler(appSettings.HelixDBConnection));
