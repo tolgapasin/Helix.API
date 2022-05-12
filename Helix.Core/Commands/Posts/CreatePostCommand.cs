@@ -9,8 +9,7 @@ namespace Helix.Core.Commands.Posts
         [DataMember]
         public string Content { get; private set; }
 
-        public CreatePostCommand(
-            string content)
+        public CreatePostCommand(string content)
         {
             Content = content;
         }

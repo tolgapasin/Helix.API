@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Helix.API.Controllers
 {
-    [EnableCors("Policy1")]
+    //[EnableCors("Policy1")]
     [ApiController]
     [Route("api/[controller]")]
     public class PostController : ControllerBase

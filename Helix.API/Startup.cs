@@ -26,11 +26,14 @@ namespace Helix.API
             var appSettings = ReadAppSettings(Configuration);
             var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("Policy1",
-            //    builder => builder.WithOrigins("http://localhost:8080"));
-            //});
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("http://localhost:8080");
+                                  });
+            });
 
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
@@ -56,7 +59,7 @@ namespace Helix.API
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseCors("AllowMyOrigin");
+            app.UseCors("_myAllowSpecificOrigins");
 
             app.UseHttpsRedirection();
 
