@@ -24,7 +24,7 @@ namespace Helix.API
         public void ConfigureServices(IServiceCollection services)
         {
             var appSettings = ReadAppSettings(Configuration);
-            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+/*            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
             services.AddCors(options =>
             {
@@ -33,7 +33,7 @@ namespace Helix.API
                                   {
                                       policy.WithOrigins("http://localhost:8080");
                                   });
-            });
+            });*/
 
             services.AddMediatR(typeof(Startup));
             services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null); ;
@@ -54,12 +54,15 @@ namespace Helix.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(policy => policy.AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .SetIsOriginAllowed(origin => true)
+                           .AllowCredentials());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseCors("_myAllowSpecificOrigins");
 
             app.UseHttpsRedirection();
 

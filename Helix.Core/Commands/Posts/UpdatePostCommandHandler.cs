@@ -17,7 +17,7 @@ namespace Helix.Core.Commands.Posts
 
         public async Task<int> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
         {
-            Guid userId = Guid.NewGuid();
+            /*Guid userId = Guid.NewGuid();
 
             string sql = $@"
                 UPDATE dbo.Posts
@@ -27,7 +27,7 @@ namespace Helix.Core.Commands.Posts
             var response = await _commandHandler.ExecuteCommandAsync(sql);
 
             if (response != 0)
-                return response;
+                return response;*/
 
             return 0;
         }

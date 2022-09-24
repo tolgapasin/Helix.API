@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 using Helix.Infrastructure.Database;
@@ -28,14 +30,26 @@ namespace Helix.Core.Commands.Posts
                     ,UpdatedDate
                     ,UpdatedBy)
                 VALUES
-                    ('{Guid.NewGuid()}'
-                    ,'{request.Content}'
-                    ,'{DateTime.Now}'
-                    ,'{userId}'
-                    ,'{DateTime.Now}'
-                    ,'{userId}');";
+                    (@PostId
+                    ,@Content
+                    ,@DateCreated
+                    ,@CreatedBy
+                    ,@UpdatedDate
+                    ,@UpdatedBy);";
 
-            var response = await _commandHandler.ExecuteCommandAsync(sql);
+
+            var response = await _commandHandler.ExecuteCommandAsync(
+                sql,
+                new Dictionary<string, object>
+                {
+                    { "@PostId", Guid.NewGuid() },
+                    { "@Content", request.Content },
+                    { "@DateCreated", DateTime.Now },
+                    { "@CreatedBy", userId },
+                    { "@UpdatedDate",  DateTime.Now },
+                    { "@UpdatedBy", userId }
+                }
+            );
 
             if (response != 0)
                 return response;
